@@ -112,6 +112,13 @@
       .task-item-anim {
         animation: taskPopIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       }
+
+      /* Utility for multi-line force wrap across all browser engines */
+      .wrap-text-fix {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        white-space: normal;
+      }
     </style>
   </head>
   <body
@@ -198,7 +205,7 @@
         </header>
 
         <!-- ================= PAGE 1: FRONT PAGE ================= -->
-        <main id="pageTasks" class="flex-1 flex flex-col gap-4">
+        <main id="pageTasks" class="flex-1 flex flex-col gap-4 min-w-0">
           <!-- CALENDAR HEADER -->
           <div
             class="bg-slate-50/90 dark:bg-[#212121] p-3 sm:p-4 rounded-2xl border border-slate-200/80 dark:border-[#383838] shadow-2xs overflow-hidden"
@@ -255,17 +262,17 @@
           <!-- Task Creation Input Bar -->
           <form onsubmit="handleAddTask(event)" class="flex items-center gap-2">
             <div
-              class="flex-1 bg-slate-50 dark:bg-[#2f2f2f] border border-slate-200 dark:border-[#383838] rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 flex items-center gap-2.5 sm:gap-3 focus-within:ring-2 focus-within:ring-slate-900 dark:focus-within:ring-[#10a37f] transition-all"
+              class="flex-1 min-w-0 bg-slate-50 dark:bg-[#2f2f2f] border border-slate-200 dark:border-[#383838] rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3 flex items-center gap-2.5 sm:gap-3 focus-within:ring-2 focus-within:ring-slate-900 dark:focus-within:ring-[#10a37f] transition-all"
             >
               <i
                 data-lucide="plus-circle"
-                class="w-5 h-5 text-slate-400 dark:text-zinc-400 shrink-0"
+                class="w-6 h-6 text-slate-400 dark:text-zinc-400 shrink-0"
               ></i>
               <input
                 type="text"
                 id="taskInput"
                 placeholder="Add a new task or speak..."
-                class="w-full bg-transparent outline-none text-xs sm:text-sm font-semibold text-slate-800 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-500"
+                class="w-full min-w-0 bg-transparent outline-none text-base sm:text-lg font-bold text-slate-800 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-500"
               />
               <button
                 type="button"
@@ -274,21 +281,21 @@
                 class="p-1.5 hover:bg-slate-200/60 dark:hover:bg-[#383838] rounded-lg text-slate-500 dark:text-zinc-400 transition-all shrink-0"
                 title="Voice Input"
               >
-                <i data-lucide="mic" class="w-4 h-4"></i>
+                <i data-lucide="mic" class="w-5 h-5"></i>
               </button>
             </div>
             <button
               type="submit"
-              class="px-4 sm:px-6 py-2.5 sm:py-3.5 bg-slate-900 dark:bg-[#10a37f] text-white rounded-2xl font-bold text-xs sm:text-sm hover:bg-slate-800 dark:hover:bg-[#0e8e6d] transition-all shadow-xs flex items-center gap-1.5 shrink-0 active:scale-95"
+              class="px-5 sm:px-7 py-3 sm:py-4 bg-slate-900 dark:bg-[#10a37f] text-white rounded-2xl font-bold text-sm sm:text-base hover:bg-slate-800 dark:hover:bg-[#0e8e6d] transition-all shadow-xs flex items-center gap-1.5 shrink-0 active:scale-95"
             >
-              <i data-lucide="plus" class="w-4 h-4"></i>
+              <i data-lucide="plus" class="w-5 h-5"></i>
               <span>Add</span>
             </button>
           </form>
 
           <!-- Tasks Filter Tabs & Dynamic List Container -->
           <div
-            class="flex-1 flex flex-col bg-white dark:bg-[#171717] rounded-2xl border border-slate-100 dark:border-[#2f2f2f] p-3.5 sm:p-5 shadow-xs"
+            class="flex-1 min-w-0 flex flex-col bg-white dark:bg-[#171717] rounded-2xl border border-slate-100 dark:border-[#2f2f2f] p-3.5 sm:p-5 shadow-xs"
           >
             <div
               class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-[#2f2f2f]"
@@ -330,7 +337,7 @@
 
             <div
               id="taskListContainer"
-              class="space-y-2 mt-4 overflow-y-auto custom-scrollbar flex-1 pr-1 max-h-[40vh] md:max-h-[46vh]"
+              class="space-y-2 mt-4 overflow-y-auto custom-scrollbar flex-1 pr-1 max-h-[40vh] md:max-h-[46vh] min-w-0"
             >
               <!-- Tasks dynamically populate here -->
             </div>
@@ -571,7 +578,7 @@
               type="text"
               id="editTaskTitle"
               required
-              class="w-full p-3 rounded-xl border border-slate-200 dark:border-[#383838] bg-transparent dark:text-zinc-100 outline-none text-sm font-semibold focus:ring-2 focus:ring-slate-900 dark:focus:ring-[#10a37f] transition-all"
+              class="w-full p-3 rounded-xl border border-slate-200 dark:border-[#383838] bg-transparent dark:text-zinc-100 outline-none text-base font-bold focus:ring-2 focus:ring-slate-900 dark:focus:ring-[#10a37f] transition-all"
             />
           </div>
 
@@ -1483,15 +1490,15 @@
         container.innerHTML = filtered
           .map(
             (t) => `
-        <div class="task-item-anim p-3 rounded-xl border border-slate-100 dark:border-[#383838] bg-slate-50/60 dark:bg-[#2f2f2f] hover:bg-slate-100/60 dark:hover:bg-[#383838] flex items-center justify-between gap-2.5 transition-all ${t.completed ? "opacity-60" : ""}">
-          <div class="flex items-center gap-2.5 min-w-0 flex-1">
-            <button onclick="toggleTask('${t.id}', ${t.completed})" class="text-slate-400 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-100 transition-colors shrink-0">
+        <div class="task-item-anim p-2.5 sm:p-3.5 rounded-xl border border-slate-100 dark:border-[#383838] bg-slate-50/60 dark:bg-[#2f2f2f] hover:bg-slate-100/60 dark:hover:bg-[#383838] flex items-start justify-between gap-2.5 transition-all min-w-0 ${t.completed ? "opacity-60" : ""}">
+          <div class="flex items-start gap-2.5 min-w-0 flex-1">
+            <button onclick="toggleTask('${t.id}', ${t.completed})" class="text-slate-400 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-100 transition-colors shrink-0 mt-0.5">
               <i data-lucide="${t.completed ? "check-circle-2" : "circle"}" class="${t.completed ? "text-emerald-500 dark:text-[#10a37f]" : ""} w-5 h-5"></i>
             </button>
-            <span class="text-xs sm:text-sm font-semibold text-slate-800 dark:text-zinc-100 truncate ${t.completed ? "line-through text-slate-400 dark:text-zinc-500" : ""}">${t.title}</span>
+            <span class="text-base sm:text-lg font-bold text-slate-800 dark:text-zinc-100 wrap-text-fix leading-snug ${t.completed ? "line-through text-slate-400 dark:text-zinc-500" : ""}">${t.title}</span>
           </div>
           
-          <div class="flex items-center gap-1 shrink-0">
+          <div class="flex items-center gap-1 shrink-0 mt-0.5">
             <button onclick="openEditTaskModal('${t.id}', '${t.title.replace(/'/g, "\\'")}')" class="p-1 text-slate-400 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg transition-all" title="Edit Task">
               <i data-lucide="pencil" class="w-4 h-4"></i>
             </button>
