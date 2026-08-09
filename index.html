@@ -71,18 +71,6 @@
         scrollbar-width: none;
       }
 
-      .custom-scrollbar::-webkit-scrollbar {
-        width: 5px;
-        height: 5px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 9999px;
-      }
-      .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #424242;
-      }
-
       /* Flatpickr Styling Overrides */
       .flatpickr-calendar {
         background: #171717 !important;
@@ -122,14 +110,14 @@
     </style>
   </head>
   <body
-    class="text-slate-800 dark:text-zinc-100 antialiased selection:bg-slate-900 selection:text-white dark:selection:bg-zinc-100 dark:selection:text-zinc-900 pb-20 md:pb-6"
+    class="text-slate-800 dark:text-zinc-100 antialiased selection:bg-slate-900 selection:text-white dark:selection:bg-zinc-100 dark:selection:text-zinc-900 pb-20 md:pb-6 min-h-screen"
   >
     <div
-      class="min-h-screen p-3 sm:p-4 md:p-6 flex flex-col justify-center items-center"
+      class="min-h-screen p-3 sm:p-4 md:p-6 flex flex-col justify-start items-center"
     >
-      <!-- MAIN APPLICATION CONTAINER -->
+      <!-- MAIN APPLICATION CONTAINER (Auto-expands vertically with tasks) -->
       <div
-        class="w-full max-w-4xl bg-white dark:bg-[#171717] border border-slate-200/80 dark:border-[#383838] rounded-2xl md:rounded-3xl p-3.5 sm:p-6 md:p-8 shadow-sm flex flex-col gap-4 sm:gap-5 min-h-[88vh]"
+        class="w-full max-w-4xl bg-white dark:bg-[#171717] border border-slate-200/80 dark:border-[#383838] rounded-2xl md:rounded-3xl p-3.5 sm:p-6 md:p-8 shadow-sm flex flex-col gap-4 sm:gap-5 h-auto"
       >
         <!-- HEADER -->
         <header
@@ -205,7 +193,7 @@
         </header>
 
         <!-- ================= PAGE 1: FRONT PAGE ================= -->
-        <main id="pageTasks" class="flex-1 flex flex-col gap-4 min-w-0">
+        <main id="pageTasks" class="flex flex-col gap-4 min-w-0 w-full">
           <!-- CALENDAR HEADER -->
           <div
             class="bg-slate-50/90 dark:bg-[#212121] p-3 sm:p-4 rounded-2xl border border-slate-200/80 dark:border-[#383838] shadow-2xs overflow-hidden"
@@ -295,7 +283,7 @@
 
           <!-- Tasks Filter Tabs & Dynamic List Container -->
           <div
-            class="flex-1 min-w-0 flex flex-col bg-white dark:bg-[#171717] rounded-2xl border border-slate-100 dark:border-[#2f2f2f] p-3.5 sm:p-5 shadow-xs"
+            class="w-full flex flex-col bg-white dark:bg-[#171717] rounded-2xl border border-slate-100 dark:border-[#2f2f2f] p-3.5 sm:p-5 shadow-xs"
           >
             <div
               class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-[#2f2f2f]"
@@ -335,9 +323,10 @@
               </div>
             </div>
 
+            <!-- Expanding Task Container without internal scrollbar constraints -->
             <div
               id="taskListContainer"
-              class="space-y-2 mt-4 overflow-y-auto custom-scrollbar flex-1 pr-1 max-h-[40vh] md:max-h-[46vh] min-w-0"
+              class="space-y-2 mt-4 min-w-0 h-auto"
             >
               <!-- Tasks dynamically populate here -->
             </div>
@@ -345,7 +334,7 @@
         </main>
 
         <!-- ================= PAGE 2: PROGRESS PAGE ================= -->
-        <main id="pageProgress" class="hidden flex-1 flex-col gap-5">
+        <main id="pageProgress" class="hidden flex-col gap-5 w-full">
           <!-- TOP METRICS GRID -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <!-- Welcome Card -->
